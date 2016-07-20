@@ -397,8 +397,10 @@ public class Joystick extends FrameLayout {
             offset = radius;
         }
 
-        final double radians = Math.atan2(-y, x);
-        final float degrees = (float) (180 * radians / Math.PI);
+        // correctify angle. make it more straightforward
+        final double radis = Math.atan2(y, x);
+        float degree = (float)(180 * radis / Math.PI);
+        degree = ((degree < 0 ? degree + 360 : degree) + 90) % 360;
 
         if (null != listener) listener.onDrag(degrees, 0 == radius ? 0 : offset / radius);
 
